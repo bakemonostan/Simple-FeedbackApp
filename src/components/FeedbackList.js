@@ -4,7 +4,7 @@ import FeedbackContext from '../context/FeedbackContext';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function FeedbackList({ handleDelete }) {
+export default function FeedbackList() {
   //create a context variable
   const { feedback } = useContext(FeedbackContext);
 
@@ -24,11 +24,7 @@ export default function FeedbackList({ handleDelete }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <FeedbackItem
-              key={item.id}
-              item={item}
-              handleDelete={handleDelete}
-            />
+            <FeedbackItem key={item.id} item={item} />
           </motion.div>
         ))}
       </AnimatePresence>
