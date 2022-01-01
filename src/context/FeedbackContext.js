@@ -12,21 +12,43 @@ const FeedbackContext = createContext();
 export const FeedbackProvider = ({ children }) => {
   //states and functions would be created before the return
   //set feedbackdata to a state
-
   const [feedback, setFeedback] = useState(FeedbackData);
 
-  //addFeedback function prop
+  //edit feedback state
+  const [feedbackEdit, setFeedbackEdit] = useState({
+    item: {},
+    edit: false,
+  });
+
+  //addFeedback function
   const addFeedback = (newFeedback) => {
     //adding a unique ID with uuid
     newFeedback.id = uuidv4();
     setFeedback([newFeedback, ...feedback]);
   };
 
-  //deleteFeedback function prop
+  //deleteFeedback function
   const deleteFeedback = (id) => {
     if (window.confirm('Are you sure you want to delete?')) {
       setFeedback(feedback.filter((item) => item.id !== id));
     }
+  };
+
+  //edit feedback function
+  const editFeedback = (item) => {
+    setFeedbackEdit({
+      item,
+      edit: true,
+    });
+  };
+
+  //update feedback
+  const updateFeedback = (id, updateItem) => {
+    setFeedback(
+      feedback.map((item) =>
+        item.id === id ? { ...item, ...updateItem } : item
+      )
+    );
   };
 
   //return context provider component
@@ -34,8 +56,11 @@ export const FeedbackProvider = ({ children }) => {
     <FeedbackContext.Provider
       value={{
         feedback,
+        feedbackEdit,
         deleteFeedback,
         addFeedback,
+        editFeedback,
+        updateFeedback,
       }}
     >
       {children}
