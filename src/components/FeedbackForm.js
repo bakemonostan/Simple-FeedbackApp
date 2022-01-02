@@ -16,6 +16,7 @@ function FeedbackForm() {
   const { addFeedback, feedbackEdit, updateFeedback } =
     useContext(FeedbackContext);
 
+  //feedback edit is a side effect so we're gonna use the useEffect hook for it
   useEffect(() => {
     if (feedbackEdit.edit === true) {
       setBtnDisabled(false);
@@ -49,6 +50,8 @@ function FeedbackForm() {
       };
 
       //updating feedback
+      //user can either submit a new feedback or an updated feedback
+
       if (feedbackEdit.edit === true) {
         updateFeedback(feedbackEdit.item.id, newFeedback);
       } else {
